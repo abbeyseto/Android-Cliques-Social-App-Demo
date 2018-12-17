@@ -8,7 +8,7 @@ import {
   Button,
   Image
 } from "react-native";
-//import { StackNavigator } from "react-navigation";
+import { LinearGradient } from 'expo';
 
 export default class LoginScreen extends Component {
   static navigationOptions = () => {
@@ -22,6 +22,10 @@ export default class LoginScreen extends Component {
   };
   render() {
     return (
+        <LinearGradient
+          colors={['#4C1991', '#4F1A94', '#8422D5', '#982EBE', '#CF507F', '#EA6060']}
+          style={{ flex: 1}}
+          start={[0.1,0.1]} end={[1,1]}>
       <View style={styles.container}>
         <Text style={{ color: "#fff", fontSize: 30 }} />
         <Image
@@ -60,6 +64,7 @@ export default class LoginScreen extends Component {
           />
         </View>
       </View>
+      </LinearGradient>
     );
   }
 }
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     color: "#fff",
-    backgroundColor: "#4F1A94",
+   // backgroundColor: "#4F1A94",
     alignItems: "center",
     justifyContent: "center"
   },

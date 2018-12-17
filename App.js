@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import { createAppContainer } from "react-navigation";
 import LoginScreen from "./Screens/LoginScreen";
-import HomeScreen from "./Screens/HomeScreen";
+import HomeScreen from "./Screens/Navigation";
 
 class App extends React.Component {
   render() {
@@ -19,12 +19,13 @@ const AppNavigator = createStackNavigator(
   {
     LoginScreen: { screen: LoginScreen },
     HomeScreen: { screen: HomeScreen }
-  },{
-    headerMode: 'screen',
+  },
+  {
+    headerMode: "screen",
     defaultNavigationOptions: {
-      gesturesEnabled: true,
-    },
-    } 
+      gesturesEnabled: true
+    }
+  }
 );
 
 const AppContainer = createAppContainer(AppNavigator);
