@@ -10,5 +10,5 @@ You will be required to download Expo app on IOS or Android, Click to download t
 
 After installing the app, use the barcode scan on the app to scan the bar code on my page to test LinkCard Demo App.
 
-##Author
+## Author
 Adenle Abiodun [https://adenleabiodun.com](https://adenleabiodun.com)
