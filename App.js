@@ -1,30 +1,31 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { createStackNavigator } from "react-navigation";
-import { createAppContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 import LoginScreen from "./Screens/LoginScreen";
-import HomeScreen from "./Screens/Navigation";
+import AppNavigation from "./Navs/AppNavigation";
+import HomeScreenNav from "./Navs/HomeScreenNav";
+import UsersNav from "./Navs/UsersNav";
 
 class App extends React.Component {
   render() {
-    return (
-      <View>
-        <AppNavigator />
-      </View>
-    );
+    return <AppContainer />;
   }
 }
 
 const AppNavigator = createStackNavigator(
   {
     LoginScreen: { screen: LoginScreen },
-    HomeScreen: { screen: HomeScreen }
+    AppNavigation: { screen: AppNavigation },
+    HomeScreenNav: { screen: HomeScreenNav },
+    UsersNav: { screen: UsersNav }
   },
+
   {
-    headerMode: "screen",
-    defaultNavigationOptions: {
-      gesturesEnabled: true
-    }
+    initialRouteName: "LoginScreen",
+    headerMode: "none"
+    //  defaultNavigationOptions: {
+    //    gesturesEnabled: true
+    // }
   }
 );
 
@@ -36,4 +37,4 @@ const AppContainer = createAppContainer(AppNavigator);
 //   }
 // });
 
-export default AppContainer;
+export default App;

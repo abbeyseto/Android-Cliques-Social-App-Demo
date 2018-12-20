@@ -1,69 +1,87 @@
 import React, { Component } from "react";
 import {
-  Platform,
   View,
   Text,
   TextInput,
   StyleSheet,
-  Button,
-  Image
+  Image,
+  TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from 'expo';
+import { LinearGradient } from "expo";
 
 export default class LoginScreen extends Component {
-  static navigationOptions = () => {
-    return {
-      title: "Please Log in",
-      headerStyle: {
-        backgroundColor: "#4F1A94"
-      },
-      headerTintColor:  "#fff"
-    };
-  };
+
   render() {
     return (
-        <LinearGradient
-          colors={['#4C1991', '#4F1A94', '#8422D5', '#982EBE', '#CF507F', '#EA6060']}
-          style={{ flex: 1}}
-          start={[0.1,0.1]} end={[1,1]}>
-      <View style={styles.container}>
-        <Text style={{ color: "#fff", fontSize: 30 }} />
-        <Image
-          style={{ marginBottom: 100 }}
-          source={require("../assets/Image-22.png")}
-        />
-        <TextInput
-          style={styles.input}
-          type="email"
-          placeholder="Username"
-          underlineColorAndroid="white"
-          autoFocus={true}
-          textContentType="username"
-        />
-        <TextInput
-          style={styles.input}
-          type="Password"
-          placeholder="Password"
-          underlineColorAndroid="white"
-          secureTextEntry={true}
-          textContentType="password"
-        />
+      <LinearGradient
+        colors={[
+          "#4C1991",
+          "#4F1A94",
+          "#8422D5",
+          "#982EBE",
+          "#CF507F",
+          "#EA6060"
+        ]}
+        style={{ flex: 1 }}
+        start={[0.1, 0.1]}
+        end={[1, 1]}
+      >
+        <View style={styles.container}>
+          <Text style={{ color: "#fff", fontSize: 30 }} />
+          <Image
+            style={{ marginBottom: 100 }}
+            source={require("../assets/Image-22.png")}
+          />
+          <TextInput
+            style={styles.input}
+            type="email"
+            placeholder="Username"
+            underlineColorAndroid="white"
+            autoFocus={true}
+            textContentType="username"
+          />
+          <TextInput
+            style={styles.input}
+            type="Password"
+            placeholder="Password"
+            underlineColorAndroid="white"
+            secureTextEntry={true}
+            textContentType="password"
+          />
 
-        <View style={styles.button}>
-          <Button
-            onPress={() => this.props.navigation.navigate("HomeScreen")}
-            title="Log In"
-            accessibilityLabel="Log in to the user account"
-          />
+          <View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("AppNavigation")}
+              style={styles.customBtnBG}
+            >
+              <Text style={{ fontSize: 17 }}>LOG IN</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("AppNavigation")}
+              style={styles.customBtnBG}
+            >
+              <Text style={{ fontSize: 17 }}>SIGN UP</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <LinearGradient
+              colors={["#4c669f", "#3b5998", "#192f6a"]}
+              style={{ padding: 15, alignItems: "center", borderRadius: 5 }}
+            >
+              <Text
+                style={{
+                  backgroundColor: "transparent",
+                  fontSize: 15,
+                  color: "#fff"
+                }}
+              >
+                Sign in with Facebook
+              </Text>
+            </LinearGradient>
+          </View>
         </View>
-        <View style={styles.button}>
-          <Button
-            onPress={() => this.props.navigation.navigate("HomeScreen")}
-            title="Sign Up"
-            accessibilityLabel="Sign up a user account"
-          />
-        </View>
-      </View>
       </LinearGradient>
     );
   }
@@ -73,16 +91,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     color: "#fff",
-   // backgroundColor: "#4F1A94",
     alignItems: "center",
     justifyContent: "center"
   },
-  button: {
-    width: "30%",
-    marginTop: 15,
-    color: "#4F1A94",
-    height: 50,
-    fontSize: 20
+  customBtnBG: {
+    width: 175,
+    margin: 15,
+    backgroundColor: "#fff",
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 5,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 4,
+    shadowOffset: { width: 5, height: 5 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 10
   },
   input: {
     height: 50,
