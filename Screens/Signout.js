@@ -13,6 +13,11 @@ class Signout extends Component {
     static navigationOptions = () => {
         return {
           title: "Sign out?",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            textAlign: "center",
+            flex: 1
+          },
           headerStyle: {
             backgroundColor: "#4F1A94"
           },

@@ -1,4 +1,5 @@
 {
+  "name": "androidclique",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -8,10 +9,16 @@
   },
   "dependencies": {
     "expo": "^31.0.2",
+    "parse": "^2.1.0",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native": "0.57.1",
     "react-native-linear-gradient": "^2.5.3",
-    "react-navigation": "^3.0.8"
+    "react-navigation": "^3.0.9"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

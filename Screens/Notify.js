@@ -1,14 +1,35 @@
 import React, { Component } from "react";
-import { FlatList, ActivityIndicator, Text, View } from "react-native";
-
+import {
+  FlatList,
+  ActivityIndicator,
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Platform
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 export default class Notification extends Component {
-  static navigationOptions = () => {
+  navigationOptions = () => {
     return {
       title: "Settings",
+      headerTitleStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        flex: 1
+      },
       headerStyle: {
         backgroundColor: "#4F1A34"
       },
-      headerTintColor: "#fff"
+      headerTintColor: "#fff",
+      headerLeft: (
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={() => navigation.openDrawer()}
+        >
+          <Ionicons name="md-menu" size={20} color="#fff" />
+        </TouchableOpacity>
+      )
     };
   };
   constructor(props) {
@@ -57,3 +78,44 @@ export default class Notification extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    color: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  customBtnBG: {
+    width: "auto",
+    margin: 10,
+    backgroundColor: "#fff",
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 5,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 4,
+    shadowOffset: { width: 5, height: 5 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 10
+  },
+  headerButton: {
+    width: "auto",
+    margin: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 5,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 4,
+    shadowOffset: { width: 5, height: 5 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 10
+    //backgroundColor: "#4F6790"
+  }
+});

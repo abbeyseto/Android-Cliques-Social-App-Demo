@@ -6,54 +6,63 @@ import {
   TouchableOpacity,
   StatusBar,
   Button,
-  Container
+  Image,
+  AsyncStorage
 } from "react-native";
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import { LinearGradient } from "expo";
+import { DrawerActions } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
-import Signout from "./Signout";
+import Parse from "parse/react-native";
+
+// Initialize Parse SDK
+//Parse.setAsyncStorage(AsyncStorage);
+Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
+Parse.initialize(
+  "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
+  "EVmHRiYvaKr8oD65oRX2kCgdcdPnZ9Cm7IplRwvn" // This is your Javascript key
+);
 
 export default class HomeScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: "Home",
-      headerStyle: {
-        backgroundColor: "#3b5908"
-      },
-      headerTintColor: "yellow",
-      headerTitleStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        flex: 1
-      },
-    //   headerRight: (
-    //     <TouchableOpacity
-    //       style={styles.headerButton}
-    //       onPress={() => navigation.navigate("Signout")}
-    //       title="LogOut"
-    //       color= "#fff"
-    //     >
-    //       <Text>LogOut</Text>
-    //     </TouchableOpacity>
-    //   ),
-    //   headerLeft: (
-    //     <TouchableOpacity
-    //       style={styles.headerButton}
-    //       onPress={() => navigation.openDrawer()}
-    //     >
-    //       <Ionicons name="md-menu" size={20} />
-    //     </TouchableOpacity>
-    //   )
-    };
+  constructor(props) {
+    super(props);
+    //this._signOutAsync();
+  }
+
+  _username = () => {
+    Parse.User.currentAsync().then(function(user) {
+      return user;
+    });
   };
+
+  // _signOutAsync = async ({}) => {
+  //   await AsyncStorage.clear();
+  //   this.props.navigation.navigate();
+  // };
+
   render() {
     return (
       <View style={styles.container}>
+        <Text style={{ fontSize: 17 }}>
+          Hi <Text>{this._username()}</Text>, Welcome to Android Clique!
+        </Text>
+        <Image
+          style={{ marginBottom: 100 }}
+          source={require("../assets/icon.png")}
+        />
+        <Button
+          title="Menu"
+          onPress={() =>
+            this.props.navigation.dispatch(DrawerActions.toggleDrawer())
+          }
+          //WORKS STRAIGHT IF HOMESCREENNAV IS ADDED TO DRAWNAV DIRECTLY
+          //onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
+        />
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("Signout")}
+          onPress={() => {
+            this.props.navigation.navigate("CameraApp");
+          }}
           style={styles.customBtnBG}
         >
-          <Text style={{ fontSize: 17 }}>Go to Signout</Text>
+          <Text style={{ fontSize: 17 }}>Go to Camera</Text>
         </TouchableOpacity>
       </View>
     );
@@ -82,8 +91,8 @@ const styles = StyleSheet.create({
     shadowColor: "grey",
     shadowOpacity: 0.5,
     shadowRadius: 10
-  }, 
-  headerButton:{
+  },
+  headerButton: {
     width: "auto",
     margin: 10,
     paddingHorizontal: 30,
@@ -97,6 +106,6 @@ const styles = StyleSheet.create({
     shadowColor: "grey",
     shadowOpacity: 0.5,
     shadowRadius: 10,
-    backgroundColor: "transparent"
+    backgroundColor: "#3b5908"
   }
 });

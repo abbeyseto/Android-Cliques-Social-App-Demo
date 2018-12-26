@@ -6,12 +6,82 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Alert,
+  Modal
 } from "react-native";
-import { LinearGradient } from "expo";
+import { LinearGradient, Font, AppLoading } from "expo";
+import { AuthSession } from "expo";
+import { AsyncStorage } from "react-native";
+import Parse from "parse/react-native";
+
+// Initialize Parse SDK
+Parse.User.enableUnsafeCurrentUser();
+Parse.setAsyncStorage(AsyncStorage);
+Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
+Parse.initialize(
+  "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
+  "EVmHRiYvaKr8oD65oRX2kCgdcdPnZ9Cm7IplRwvn" // This is your Javascript key
+);
+
+
+const FB_APP_ID = "114986519187769";
 
 export default class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      username: "",
+      password: "",
+      loginState: false
+    };
+  }
+
+
+  async componentWillMount() {
+    await Font.loadAsync({
+      SirinStencil: require("../assets/fonts/SirinStencil.ttf")
+    });
+    this.setState({ loading: false });
+  }
+
+  // _signInAsync = async () => {
+  //   await AsyncStorage.setItem("userToken", "abc");
+  //   this.props.navigation.navigate("App");
+  // };
+
+  _handleLogin = () => {
+    // let getUsername = this.state.username;
+    // let getPassword = this.state.password;
+ 
+    // // Pass the username and password to logIn function
+    // Parse.User.logIn(getUsername, getPassword)
+    //   .then(user => {
+    //     // Do stuff after successful login
+    //     this.setState({ loginState: true });
+    //     if (this.state.loginState) {
+          this.props.navigation.navigate("mainDrawNav");
+      //   }
+      // })
+      // .catch(error => {
+      //   Alert.alert("Sorry: " + error.message);
+      // });
+  };
+
+  _facebookLogin = async () => {
+    let redirectUrl = AuthSession.getRedirectUrl();
+    let result = await AuthSession.startAsync({
+      authUrl: `https://www.facebook.com/v2.8/dialog/oauth?response_type=token&client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
+        redirectUrl
+      )}`
+    });
+    this.setState({ result });
+  };
 
   render() {
+    if (this.state.loading) {
+      return <AppLoading />;
+    }
     return (
       <LinearGradient
         colors={[
@@ -27,17 +97,26 @@ export default class LoginScreen extends Component {
         end={[1, 1]}
       >
         <View style={styles.container}>
-          <Text style={{ color: "#fff", fontSize: 30 }} />
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 40,
+              fontFamily: "SirinStencil"
+            }}
+          >
+            Android Clique
+          </Text>
           <Image
-            style={{ marginBottom: 100 }}
-            source={require("../assets/Image-22.png")}
+            style={{ width: 100, height: 150, marginBottom: 10 }}
+            source={require("../assets/Applogo.png")}
           />
           <TextInput
             style={styles.input}
             type="email"
             placeholder="Username"
             underlineColorAndroid="white"
-            autoFocus={true}
+            autoFocus={false}
+            onChangeText={username => this.setState({ username })}
             textContentType="username"
           />
           <TextInput
@@ -45,13 +124,16 @@ export default class LoginScreen extends Component {
             type="Password"
             placeholder="Password"
             underlineColorAndroid="white"
+            onChangeText={password => this.setState({ password })}
             secureTextEntry={true}
             textContentType="password"
           />
 
           <View>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("AppNavigation")}
+              onPress={() => {
+                this._handleLogin();
+              }}
               style={styles.customBtnBG}
             >
               <Text style={{ fontSize: 17 }}>LOG IN</Text>
@@ -59,13 +141,16 @@ export default class LoginScreen extends Component {
           </View>
           <View>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("AppNavigation")}
+              onPress={() => this.props.navigation.navigate("SignupScreen")}
               style={styles.customBtnBG}
             >
-              <Text style={{ fontSize: 17 }}>SIGN UP</Text>
+              <Text style={{ fontSize: 13 }}>CREATE ACCOUNT</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <TouchableOpacity
+            style={{ alignItems: "center", justifyContent: "center" }}
+            onPress={() => this._facebookLogin()}
+          >
             <LinearGradient
               colors={["#4c669f", "#3b5998", "#192f6a"]}
               style={{ padding: 15, alignItems: "center", borderRadius: 5 }}
@@ -80,7 +165,10 @@ export default class LoginScreen extends Component {
                 Sign in with Facebook
               </Text>
             </LinearGradient>
-          </View>
+          </TouchableOpacity>
+          {this.state.result ? (
+            <Text>{JSON.stringify(this.state.result)}</Text>
+          ) : null}
         </View>
       </LinearGradient>
     );
@@ -118,3 +206,4 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+//onPress={this._signInAsync}
