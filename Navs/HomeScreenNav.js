@@ -9,7 +9,7 @@ import {
   Header,
   Container,
   Button,
-  Platform
+  Platform,
 } from "react-native";
 import {
   createStackNavigator,
@@ -22,9 +22,8 @@ import NavigationService from "../Navs/NavigationService";
 import { DrawerActions } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../Screens/HomeScreen";
-import Signout from "../Screens/Signout";
-import CameraApp from "../Screens/Camera";
-
+import Profile from "../Screens/Profile";
+import styles from "../assets/stlysheet";
 
 const HomeNavigator = createStackNavigator(
   {
@@ -32,7 +31,7 @@ const HomeNavigator = createStackNavigator(
       screen: HomeScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          headerTitle: "Home",
+          headerTitle: "News Catch up",
           headerStyle: {
             backgroundColor: "#3b5908"
           },
@@ -49,29 +48,23 @@ const HomeNavigator = createStackNavigator(
               //WORKS STRAIGHT IF HOMESCREENNAV IS ADDED TO DRAWNAV DIRECTLY
               //onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             >
-              <Ionicons name="md-menu" size={20} color="#fff" />
+              <Ionicons name="md-menu" size={30} color="#fff" />
             </TouchableOpacity>
           ),
           headerRight: (
             <TouchableOpacity
               style={styles.headerButton}
-              onPress={() => navigation.navigate("Signout")}
-              title="LogOut"
+              onPress={() => navigation.navigate("Profile")}
+              title="Profile"
             >
-              <Text style={{ color: "#fff" }}>Exit</Text>
+              <Text style={{ color: "#fff" }}>Edit Profile</Text>
             </TouchableOpacity>
           )
         };
       }
     },
 
-    Signout: { screen: Signout },
-    CameraApp: {
-      screen: CameraApp,
-      navigationOptions: () => ({
-        title: null
-      })
-    }
+    Profile: { screen: Profile },
   },
 
   {
@@ -87,43 +80,3 @@ const HomeScreenNav = createAppContainer(HomeNavigator);
 
 export default HomeScreenNav;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  customBtnBG: {
-    width: "auto",
-    margin: 10,
-    backgroundColor: "#fff",
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10
-  },
-  headerButton: {
-    width: "auto",
-    margin: 10,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    backgroundColor: "transparent"
-  }
-});

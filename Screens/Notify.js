@@ -41,6 +41,7 @@ export default class Notification extends Component {
     return fetch("https://facebook.github.io/react-native/movies.json")
       .then(response => response.json())
       .then(responseJson => {
+        //console.log(responseJson.movies);
         this.setState(
           {
             isLoading: false,
@@ -65,57 +66,8 @@ export default class Notification extends Component {
 
     return (
       <View style={{ flex: 1, paddingTop: 20 }}>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({ item }) => (
-            <Text>
-              {item.title}, {item.releaseYear}
-            </Text>
-          )}
-          keyExtractor={({ id }, index) => id}
-        />
+        <Text>UPDATES COMING SOON....</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  customBtnBG: {
-    width: "auto",
-    margin: 10,
-    backgroundColor: "#fff",
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10
-  },
-  headerButton: {
-    width: "auto",
-    margin: 10,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10
-    //backgroundColor: "#4F6790"
-  }
-});

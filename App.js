@@ -1,11 +1,11 @@
 import React from "react";
 import {
   ActivityIndicator,
-  AsyncStorage,
   Button,
   StatusBar,
   StyleSheet,
-  View
+  View, 
+  AsyncStorage
 } from "react-native";
 import {
   createSwitchNavigator,
@@ -16,7 +16,6 @@ import NavigationService from "./Navs/NavigationService";
 import LoginScreen from "./Screens/LoginScreen";
 import SignupScreen from "./Screens/SignupScreen";
 import mainDrawNav from "./Navs/mainDrawNav";
-//import Parse from "parse/react-native";
 
 class App extends React.Component {
   render() {
@@ -36,12 +35,11 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
+  //Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
+    const userToken = await AsyncStorage.getItem("username");
+    // // This will switch to the App screen or Auth screen and this loading
+    // // screen will be unmounted and thrown away.
     this.props.navigation.navigate(userToken ? "App" : "Auth");
   };
 

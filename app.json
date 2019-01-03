@@ -1,11 +1,17 @@
 {
   "expo": {
-    "name": "LinkCard",
-    "slug": "LinkCard",
+    "name": "Android Clique",
+    "slug": "android-cliques",
     "privacy": "public",
     "sdkVersion": "31.0.0",
-    "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "android": {
+      "package": "com.abbeyseto.androidclique"
+    },
+    "version": "1.0.0-beta",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -14,15 +20,20 @@
       "backgroundColor": "#ffffff"
     },
     "packagerOpts": {
-      "assetExts": ["ttf"]
+      "assetExts": [
+        "ttf"
+      ]
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
-    "description": "A Quick User interface demo Showing navigation tabs and routes"
+    "description": "A Social application where you can read news and chat with friends",
+    "githubUrl": "https://github.com/abbeyseto/Android-Cliques-Social-App-Demo"
   }
 }

@@ -15,6 +15,7 @@ import NavigationService from "../Navs/NavigationService";
 import { DrawerActions } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import Users from "../Screens/Users";
+import styles from "../assets/stlysheet";
 
 const UsersNavigator = createStackNavigator(
   {
@@ -37,7 +38,7 @@ const UsersNavigator = createStackNavigator(
               style={styles.headerButton}
               onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             >
-              <Ionicons name="md-menu" size={20} color="#fff" />
+              <Ionicons name="md-menu" size={30} color="#fff" />
             </TouchableOpacity>
           )
         };
@@ -56,44 +57,3 @@ const UsersNavigator = createStackNavigator(
 const UsersNav = createAppContainer(UsersNavigator);
 
 export default UsersNav;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  customBtnBG: {
-    width: "auto",
-    margin: 10,
-    backgroundColor: "#fff",
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10
-  },
-  headerButton: {
-    width: "auto",
-    margin: 10,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    backgroundColor: "transparent"
-  }
-});

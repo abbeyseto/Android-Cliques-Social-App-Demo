@@ -5,9 +5,10 @@ import {
   Text,
   View,
   Button,
-  AsyncStorage,
   TouchableOpacity,
-  Alert
+  Alert,
+  AsyncStorage,
+  Image
 } from "react-native";
 import {
   createAppContainer,
@@ -18,15 +19,90 @@ import { Ionicons } from "@expo/vector-icons";
 import NavigationService from "./NavigationService";
 import tabNav from "./tabNav";
 import HomeScreenNav from "./HomeScreenNav";
+import Users from "../Screens/Users";
 import { DrawerActions } from "react-navigation-drawer";
+import styles from "../assets/stlysheet";
+import Parse from "parse/react-native";
 
-export default class mainDrawNAv extends React.Component {
+// Initialize Parse SDK
+//Parse.User.enableUnsafeCurrentUser();
+Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
+Parse.initialize(
+  "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
+  "EVmHRiYvaKr8oD65oRX2kCgdcdPnZ9Cm7IplRwvn" // This is your Javascript key
+);
+
+class MainDrawNAv extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: "",
+      image: null,
+      email: ""
+    };
+  }
+
+  async componentWillMount() {
+    const usernameGet = await AsyncStorage.getItem("username");
+    var User = new Parse.User();
+    var query = new Parse.Query(User);
+    //query = new Parse.Query(User);
+    query.equalTo("username", usernameGet);
+    var userData = await query.find();
+    for (let i = 0; i < userData.length; i++) {
+      var object1 = userData[i];
+      var currentUser = object1.get("username");
+      var userImage = object1.get("profilePicture");
+      var userEmail = object1.get("email");
+      this.setState({ user: currentUser, email: userEmail });
+      if (userImage === undefined) {
+        this.setState({ image: null });
+      } else {
+        this.setState({ image: userImage });
+      }
+      //alert(userImage);
+    }
   }
 
   render() {
-    return <MyApp />;
+    const imageSource = this.state.image;
+    const YesImage = () => {
+      return (
+        <View>
+        <TouchableOpacity style={{elevation: 90}}> 
+          <Image
+            source={{ uri: `data:image/jpeg;base64,${this.state.image}` }}
+            style={{ width: 100, height: 100, borderRadius: 50, margin: 20 }}
+          />
+          </TouchableOpacity>
+          <Text style={{ color: "black", fontSize: 15 }}>
+            {this.state.email}
+          </Text>
+        </View>
+      );
+    };
+    const NoImage = () => {
+      return (
+        <View>
+          <Image
+            source={require("../assets/noimage.png")}
+            style={{ width: 100, height: 100, borderRadius: 50, margin: 20 }}
+          />
+          <Text style={{ color: "black", fontSize: 15 }}>
+            {this.state.email}
+          </Text>
+        </View>
+      );
+    };
+
+    const DecideImage = () => {
+      if (imageSource === null) {
+        return <NoImage />;
+      } else {
+        return <YesImage />;
+      }
+    };
+    return <DecideImage />;
   }
 }
 // _signOutAsync = async () => {
@@ -38,13 +114,13 @@ const DrawerContent = props => (
   <View>
     <View
       style={{
-        backgroundColor: "#f50057",
+        backgroundColor: "transparent",
         height: 200,
         alignItems: "center",
         justifyContent: "center"
       }}
     >
-      <Text style={{ color: "white", fontSize: 30 }}>Header</Text>
+      <MainDrawNAv />
     </View>
     <DrawerItems {...props} />
     <View>
@@ -63,6 +139,9 @@ const DrawerContent = props => (
               {
                 text: "Confirm",
                 onPress: () => {
+                  Parse.User.logOut().then(() => {
+                    var currentUser = Parse.User.current(); // this will now be null
+                  });
                   AsyncStorage.clear();
                   NavigationService.navigate("LoginScreen");
                 }
@@ -78,30 +157,30 @@ const DrawerContent = props => (
   </View>
 );
 
-const HomeScreenIcon = ({ tintColor }) => {
-  return (
-    <Ionicons
-      name={Platform.OS === "ios" ? "ios-home" : "md-home"}
-      size={30}
-      color={tintColor}
-    />
-  );
-};
+// const HomeScreenIcon = ({ tintColor }) => {
+//   return (
+//     <Ionicons
+//       name={Platform.OS === "ios" ? "ios-home" : "md-home"}
+//       size={30}
+//       color={tintColor}
+//     />
+//   );
+// };
 
 const MyDrawerNavigator = createDrawerNavigator(
   {
     tabNav: {
       screen: tabNav,
       navigationOptions: () => ({
-        title: "......"
+        title: "HOME"
       })
     },
-    HomescreenNav: {
-      screen: HomeScreenNav,
-      navigationOptions: () => ({
-        title: "DrawWithStack"
-      })
-    },
+    // HomescreenNav: {
+    //   screen: HomeScreenNav,
+    //   navigationOptions: () => ({
+    //     title: "DrawWithStack"
+    //   })
+    // }
   },
   {
     initialRouteName: "tabNav",
@@ -115,45 +194,4 @@ const MyDrawerNavigator = createDrawerNavigator(
     drawerToggleRoute: "DrawerToggle"
   }
 );
-const MyApp = createAppContainer(MyDrawerNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  customBtnBG: {
-    width: "auto",
-    margin: 10,
-    backgroundColor: "#fff",
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10
-  },
-  headerButton: {
-    width: "auto",
-    margin: 10,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-    shadowOffset: { width: 5, height: 5 },
-    shadowColor: "grey",
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    backgroundColor: "#3b5908"
-  }
-});
+export default (MyApp = createAppContainer(MyDrawerNavigator));

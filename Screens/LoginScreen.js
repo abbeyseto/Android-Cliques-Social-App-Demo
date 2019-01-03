@@ -7,22 +7,22 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Modal
+  AsyncStorage,
+  Modal,
+  
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 import { AuthSession } from "expo";
-import { AsyncStorage } from "react-native";
-import Parse from "parse/react-native";
+import { Parse } from "parse/react-native";
 
 // Initialize Parse SDK
-Parse.User.enableUnsafeCurrentUser();
+//Parse.User.enableUnsafeCurrentUser();
 Parse.setAsyncStorage(AsyncStorage);
 Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
 Parse.initialize(
   "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
   "EVmHRiYvaKr8oD65oRX2kCgdcdPnZ9Cm7IplRwvn" // This is your Javascript key
 );
-
 
 const FB_APP_ID = "114986519187769";
 
@@ -37,7 +37,6 @@ export default class LoginScreen extends Component {
     };
   }
 
-
   async componentWillMount() {
     await Font.loadAsync({
       SirinStencil: require("../assets/fonts/SirinStencil.ttf")
@@ -45,27 +44,24 @@ export default class LoginScreen extends Component {
     this.setState({ loading: false });
   }
 
-  // _signInAsync = async () => {
-  //   await AsyncStorage.setItem("userToken", "abc");
-  //   this.props.navigation.navigate("App");
-  // };
-
   _handleLogin = () => {
-    // let getUsername = this.state.username;
-    // let getPassword = this.state.password;
- 
-    // // Pass the username and password to logIn function
-    // Parse.User.logIn(getUsername, getPassword)
-    //   .then(user => {
-    //     // Do stuff after successful login
-    //     this.setState({ loginState: true });
-    //     if (this.state.loginState) {
+    let getUsername = this.state.username;
+    let getPassword = this.state.password;
+    Parse.User.enableUnsafeCurrentUser();
+    // Pass the username and password to logIn function
+    Parse.User.logIn(getUsername, getPassword)
+      .then(user => {
+        // Do stuff after successful login
+        var currentUser = Parse.User.current();
+        this.setState({ loginState: true });
+        if (this.state.loginState) {
+          AsyncStorage.setItem("username", getUsername);
           this.props.navigation.navigate("mainDrawNav");
-      //   }
-      // })
-      // .catch(error => {
-      //   Alert.alert("Sorry: " + error.message);
-      // });
+        }
+      })
+      .catch(error => {
+        Alert.alert("Ooops! 🤭 ", "" + error.message);
+      });
   };
 
   _facebookLogin = async () => {

@@ -7,7 +7,6 @@ import {
   Image,
   Button,
   TouchableOpacity,
-  AsyncStorage
 } from "react-native";
 import {
   createMaterialTopTabNavigator,
@@ -33,50 +32,40 @@ const CameraIcon = ({ tintColor }) => {
   );
 };
 
-const HomeScreenIcon = ({ tintColor }) => {
+const HomeScreenIcon = () => {
   return (
     <Ionicons
-      name={Platform.OS === "ios" ? "ios-home" : "md-home"}
+      name={Platform.OS === "ios" ? "ios-paper" : "md-paper"}
       size={30}
-      color={tintColor}
+      color='#3b5908'
     />
   );
 };
-const UserIcon = ({ tintColor }) => {
+const UserIcon = () => {
   return (
     <Ionicons
-      name={Platform.OS === "ios" ? "ios-person" : "md-person"}
+      name={Platform.OS === "ios" ? "ios-people" : "md-people"}
       size={30}
-      color={tintColor}
+      color="#4F6790"
     />
   );
 };
-const NotificationIcon = ({ tintColor }) => {
+const NotificationIcon = () => {
   return (
     <Ionicons
-      name={Platform.OS === "ios" ? "ios-settings" : "md-settings"}
+      name={Platform.OS === "ios" ? "ios-map" : "md-map"}
       size={30}
-      color={tintColor}
+      color="#4F1A34"
     />
   );
 };
 
 const HomeScreenTabNavigator = createMaterialTopTabNavigator(
   {
-    CameraApp: {
-      screen: CameraApp,
-      navigationOptions: () => ({
-        title: "Camera",
-        tabBarIcon: CameraIcon
-      }),
-      style: {
-        backgroundColor: "blue"
-      }
-    },
     HomeScreenNav: {
       screen: HomeScreenNav,
       navigationOptions: () => ({
-        title: "PROFILE",
+        title: "News",
         tabBarIcon: HomeScreenIcon
       })
     },
@@ -90,7 +79,7 @@ const HomeScreenTabNavigator = createMaterialTopTabNavigator(
     NotifyNav: {
       screen: NotifyNav,
       navigationOptions: () => ({
-        title: "SETTINGS",
+        title: "PLACES",
         tabBarIcon: NotificationIcon
       })
     }
@@ -99,12 +88,12 @@ const HomeScreenTabNavigator = createMaterialTopTabNavigator(
     initialRouteName: "HomeScreenNav",
     headerMode: "screen",
     tabBarPosition: "bottom",
-    tabStyle: { backgroundColor: "#694fad", elevation: 4 },
+    //tabStyle: { backgroundColor: "#694fad", elevation: 4 },
     tabBarOptions: {
-      activeTintColor: "purple",
+      activeTintColor: "#000",
       inactiveTintColor: "gray",
       showIcon: true,
-      showLabel: false,
+      showLabel:true,
       scrollEnabled: false,
       style: { backgroundColor: "#fff" },
       indicatorStyle: { backgroundColor: "#3e2465" }

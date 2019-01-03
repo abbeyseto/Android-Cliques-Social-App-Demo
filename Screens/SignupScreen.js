@@ -6,14 +6,15 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  Platform
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 import { AsyncStorage } from "react-native";
 import Parse from "parse/react-native";
 
 // Initialize Parse SDK
-//Parse.setAsyncStorage(AsyncStorage);
+Parse.setAsyncStorage(AsyncStorage);
 Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
 Parse.initialize(
   "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
@@ -28,7 +29,8 @@ export default class LoginScreen extends Component {
       username: "",
       password: "",
       email: "",
-      signupState: false
+      signupState: false,
+      //result: ""
     };
   }
 
@@ -53,22 +55,27 @@ export default class LoginScreen extends Component {
       .signUp()
       .then(user => {
         //AsyncStorage.clear();
+        Parse.User.logOut();
         this.setState({ SignupState: true });
         if (this.state.SignupState) {
-          AsyncStorage.clear();
+          // AsyncStorage.clear();
           Alert.alert(
             "Successful!",
             "Signin Successful! Log in to your account.",
             [
-              // {
-              //   text: "OK",
-              //   onPress: () => {
-              //     this.props.navigation.navigate("LoginScreen");
-              //   }
-              // },
               {
                 text: "Proceed",
                 onPress: () => {
+                  let install = new Parse.Installation();
+                  install.set("deviceType", Platform.OS);
+                  install.save().then(
+                    resp => {
+                      console.log("Created install object", resp);
+                    },
+                    err => {
+                      console.log("Error creating install object", err);
+                    }
+                  );
                   this.props.navigation.navigate("LoginScreen");
                 }
               }
@@ -165,6 +172,7 @@ export default class LoginScreen extends Component {
               </Text>
             </TouchableOpacity>
           </View>
+          {/* <Text>{this.state.result}</Text> */}
         </View>
       </LinearGradient>
     );
