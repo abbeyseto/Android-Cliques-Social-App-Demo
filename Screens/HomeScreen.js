@@ -29,8 +29,8 @@ import styles from "../assets/stlysheet";
 Parse.setAsyncStorage(AsyncStorage);
 Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
 Parse.initialize(
-  "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
-  "EVmHRiYvaKr8oD65oRX2kCgdcdPnZ9Cm7IplRwvn" // This is your Javascript key
+  "APPLICATION_KEY_HERE", // This is your Application ID
+  "JAVASCRIPT_KEY_HERE" // This is your Javascript key
 );
 
 export default class HomeScreen extends Component {
@@ -92,10 +92,10 @@ export default class HomeScreen extends Component {
 
     var url = this.state.userinput ? `https://newsapi.org/v2/top-headlines?q=${
           this.state.userinput
-        }&limit=100&apiKey=816734caecd74eb08f84b8c38cf27f6c`
+        }&limit=100&apiKey=APPLICATION_KEY_HERE`
       : `https://newsapi.org/v2/top-headlines?country=ng&category=${
           this.state.category
-        }&limit=100&apiKey=816734caecd74eb08f84b8c38cf27f6c`;
+        }&limit=100&apiKey=APPLICATION_KEY_HERE`;
     var req = new Request(url);
     fetch(req)
       .then(response => response.json())
