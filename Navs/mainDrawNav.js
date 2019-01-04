@@ -28,8 +28,8 @@ import Parse from "parse/react-native";
 //Parse.User.enableUnsafeCurrentUser();
 Parse.serverURL = "https://parseapi.back4app.com"; // This is your Server URL
 Parse.initialize(
-  "zUZhJDMVawRRqVsPe9VuVIJuBO7F2MubO9YhSIzw", // This is your Application ID
-  "EVmHRiYvaKr8oD65oRX2kCgdcdPnZ9Cm7IplRwvn" // This is your Javascript key
+  "APPLICATION_KEY_HERE", // This is your Application ID
+  "JAVASCRIPT_KEY_HERE" // This is your Javascript key
 );
 
 class MainDrawNAv extends React.Component {
