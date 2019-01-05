@@ -51,10 +51,8 @@ export default class LoginScreen extends Component {
     user.set("email", getEmail);
     user.set("password", getPassword);
 
-    user
-      .signUp()
-      .then(user => {
-        //AsyncStorage.clear();
+    user.signUp().then(user => {
+        //Clear any login state stored in Storage from server
         Parse.User.logOut();
         this.setState({ SignupState: true });
         if (this.state.SignupState) {
